@@ -1,6 +1,9 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+	"mazhj.com/relaxoj/internal/repository"
+)
 
 type ProblemBasic struct {
 	gorm.Model
@@ -13,4 +16,9 @@ type ProblemBasic struct {
 
 func (ProblemBasic) TableName() string {
 	return "problem_basic"
+}
+
+func SelectProblemList(keyword, categoryIdentity string) *gorm.DB {
+	tx := repository.Db.Model(new(ProblemBasic)).Distinct()
+	return tx
 }
